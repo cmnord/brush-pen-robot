@@ -11,7 +11,9 @@
 - [TrueType font encoding][ttf]
 - [fonttools docs][fonttools] (converting to ttx)
 - [Quadratic bezier][bez]
+- [How OpenType works][otf]
 
 [ttf]: https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=iws-chapter08
 [fonttools]: https://pypi.org/project/fonttools/
 [bez]: https://stackoverflow.com/questions/20733790/truetype-fonts-glyph-are-made-of-quadratic-bezier-why-do-more-than-one-consecu
+[otf]: https://simoncozens.github.io/fonts-and-layout/opentype.html
