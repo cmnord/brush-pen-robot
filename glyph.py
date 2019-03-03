@@ -44,7 +44,7 @@ class Glyph:
             return ""
         plotted = set()
         out = ""
-        for x, y in path.T:
+        for x, y in reversed(path.T):
             if (x, y) in plotted:
                 continue
             x_relative = int(base_x + x)
