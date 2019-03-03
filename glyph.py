@@ -7,6 +7,9 @@ from typing import List, Tuple
 
 class Glyph:
     SCALE = 0.01
+    # TODO: fill in
+    Z_LOW = -1
+    Z_HIGH = -1
 
     def __init__(self, soup: element.Tag, name: str, width: int, height: int):
         self.soup = soup
@@ -39,8 +42,9 @@ class Glyph:
         for x, y in path.T:
             x_relative = int(base_x + x)
             y_relative = int(base_y + y)
-            # out += "G1 X{} Y{} Z{};\n".format(x_relative, y_relative, self.width)
-            out += "G1 X{} Y{} F100\n".format(x_relative * self.SCALE, y_relative * self.SCALE)
+            out += "G1 X{} Y{} F100\n".format(
+                x_relative * self.SCALE, y_relative * self.SCALE
+            )
         return out
 
     def get_curves(self) -> List[bezier.Curve]:
