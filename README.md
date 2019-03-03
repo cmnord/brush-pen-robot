@@ -1,8 +1,10 @@
 # Calligraphy Machine ✍️
 
-![image 1](https://challengepost-s3-challengepost.netdna-ssl.com/photos/production/software_photos/000/773/630/datas/gallery.jpg)
+![image 1](images/image1.jpg)
 
-![image 2](https://challengepost-s3-challengepost.netdna-ssl.com/photos/production/software_photos/000/773/608/datas/gallery.jpg)
+![image 2](images/image2.jpg)
+
+Made for [MakeMIT 2019][make].
 
 ## Development
 1. create virtualenv
@@ -19,6 +21,7 @@
 - [Quadratic bezier][bez]
 - [How OpenType works][otf]
 
+[make]: http://makemit.org/
 [bug]: https://markhneedham.com/blog/2018/05/04/python-runtime-error-osx-matplotlib-not-installed-as-framework-mac/
 [ttf]: https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=iws-chapter08
 [fonttools]: https://pypi.org/project/fonttools/
