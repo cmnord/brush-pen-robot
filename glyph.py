@@ -2,6 +2,7 @@ import bezier
 from bs4 import BeautifulSoup, element
 import matplotlib.pyplot as plt
 import numpy as np
+from typing import List, Tuple
 
 
 class Glyph:
@@ -18,9 +19,16 @@ class Glyph:
             on = np.array([pt["on"] == "1" for pt in pts], dtype=np.bool)
             self.contours.append((x, y, on))
 
-    def interpolate_path(self, resolution: int):
+    def interpolate_path(self, resolution: int) -> np.ndarray:
         """ Interpolate points to the given resolution for each contour in this glyph."""
-        return self.contours
+        all_points = np.ndarray((2, 0))
+        curves = self.get_curves()
+        for curve in curves:
+            # TODO: base num on curve.length()?
+            x = np.linspace(0, 1, num=resolution)
+            points = curve.evaluate_multi(x)
+            all_points = np.concatenate((all_points, points), 1)
+        return all_points
 
     def get_gcode(self, base_x: int, base_y: int, resolution: int) -> str:
         """ Return a string of GCode to print this glyph starting from the relative base x and y indices."""
