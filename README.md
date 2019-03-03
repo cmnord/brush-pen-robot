@@ -1,8 +1,8 @@
 # Calligraphy Machine ✍️
 
-![img1](images/image1.jpg)
+![image 1](https://challengepost-s3-challengepost.netdna-ssl.com/photos/production/software_photos/000/773/630/datas/gallery.jpg)
 
-![img2](images/image2.jpg)
+![image 2](https://challengepost-s3-challengepost.netdna-ssl.com/photos/production/software_photos/000/773/608/datas/gallery.jpg)
 
 ## Development
 1. create virtualenv
