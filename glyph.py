@@ -63,6 +63,11 @@ class Glyph:
                 curve_end += 1
         return curves
 
+    def plot_interpolated(self, resolution: int = 10):
+        path = self.interpolate_path(resolution)
+        plt.plot(path[0], path[1])
+        plt.show()
+
     def plot(self):
         """ Plot this glyph on its own graph."""
         ax = plt.axes()
