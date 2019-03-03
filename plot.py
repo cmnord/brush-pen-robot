@@ -6,7 +6,7 @@ import pdb
 
 
 def plot_ttf(letter):
-    with open("cambam5.ttx") as f:
+    with open("fonts/cambam5.ttx") as f:
         soup = BeautifulSoup(f, "xml")
 
     ax = plt.axes()
@@ -30,4 +30,4 @@ def plot_ttf(letter):
 
 
 if __name__ == "__main__":
-    plot_ttf("A")
+    plot_ttf("N")
