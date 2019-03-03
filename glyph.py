@@ -15,7 +15,8 @@ class Glyph:
             pts = contour.find_all("pt")
             x = np.array([int(pt["x"]) for pt in pts], dtype=np.double)
             y = np.array([int(pt["y"]) for pt in pts], dtype=np.double)
-            self.contours.append((x, y))
+            on = np.array([pt["on"] == "1" for pt in pts], dtype=np.bool)
+            self.contours.append((x, y, on))
 
     def interpolate_path(self, resolution: int):
         """ Interpolate points to the given resolution for each contour in this glyph."""
@@ -34,13 +35,28 @@ class Glyph:
     def plot(self):
         """ Plot this glyph on its own graph."""
         ax = plt.axes()
-        num_pts = 2
-        for x, y in self.contours:
-            for i in range(1, len(x), num_pts):
-                x_slice = x.take(range(i - 1, i + num_pts), mode="wrap")
-                y_slice = y.take(range(i - 1, i + num_pts), mode="wrap")
-                curve = bezier.Curve(np.asfortranarray([x_slice, y_slice]), degree=3)
+
+        for x, y, on in self.contours:
+            assert len(x) == len(y) == len(on)
+            curve_start = 0
+            curve_end = 1
+            print(on)
+            plt.scatter(x, y)
+            while curve_end < len(on):
+                while curve_end < len(on) and not on[curve_end]:
+                    curve_end += 1
+                curve_end = min(len(on) - 1, curve_end + 1)
+                print(curve_start, curve_end)
+                degree = curve_end - curve_start - 1
+                curve = bezier.Curve(
+                    np.asfortranarray(
+                        [x[curve_start:curve_end], y[curve_start:curve_end]]
+                    ),
+                    degree=degree,
+                )
                 curve.plot(num_pts=256, ax=ax)
+                curve_start = curve_end - 1
+                curve_end += 1
 
         # Include height/width dot
         plt.scatter([self.width], [self.height])
