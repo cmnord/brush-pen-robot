@@ -17,7 +17,7 @@ def main(text: str, out_filename: str, resolution: int):
             gcode = glyph.get_gcode(base_x, base_y, resolution)
             f.write(gcode)
             f.write("G1 Z{}".format(Glyph.Z_HIGH))
-            base_x += glyph.width
+            base_x += glyph.width * 0.8
             # base_y += glyph.height
 
 
