@@ -20,7 +20,7 @@ class Font:
             width = int(glyph_widths.find("mtx", attrs={"name": name})["width"])
             self.glyphs[name] = Glyph(ttglyph, name, width, height)
 
-    def get_glyph(self, name: str):
+    def get_glyph(self, name: str) -> Glyph:
         return self.glyphs.get(name)
 
     def plot(self):

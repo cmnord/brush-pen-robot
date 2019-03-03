@@ -34,10 +34,11 @@ class Glyph:
     def plot(self):
         """ Plot this glyph on its own graph."""
         ax = plt.axes()
+        num_pts = 2
         for x, y in self.contours:
-            for i in range(0, len(x), 2):
-                x_slice = x.take(range(i - 1, i + 2), mode="wrap")
-                y_slice = y.take(range(i - 1, i + 2), mode="wrap")
+            for i in range(1, len(x), num_pts):
+                x_slice = x.take(range(i - 1, i + num_pts), mode="wrap")
+                y_slice = y.take(range(i - 1, i + num_pts), mode="wrap")
                 curve = bezier.Curve(np.asfortranarray([x_slice, y_slice]), degree=3)
                 curve.plot(num_pts=256, ax=ax)
 
