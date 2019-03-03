@@ -2,22 +2,23 @@ from font import Font
 from glyph import Glyph
 
 FONT = "fonts/cambam5.ttx"
+RESOLUTION = 10
 
 
-def plot_letter(letter):
-    letter = Glyph.from_font(FONT, letter)
-    letter.plot()
+def plot_letter(letter, interpolated: bool = False):
+    glyph = Glyph.from_font(FONT, letter)
+    if interpolated:
+        return glyph.plot_interpolated(RESOLUTION)
+    return glyph.plot()
 
 
-def plot_letter_interpolated(letter):
-    letter = Glyph.from_font(FONT, letter)
-    letter.plot_interpolated(5)
-
-
-def plot_font():
+def plot_font(interpolated: bool = False):
     font = Font(FONT)
-    font.plot()
+    if interpolated:
+        return font.plot_interpolated(RESOLUTION)
+    return font.plot()
 
 
 if __name__ == "__main__":
-    plot_letter_interpolated("Y")
+    letter = "B"
+    plot_letter(letter, interpolated=True)
