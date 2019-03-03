@@ -21,6 +21,6 @@ def main(text: str, out_filename: str, resolution: int):
 
 
 if __name__ == "__main__":
-    text = "Hello MakeMIT!"
+    text = "M"
     resolution = 10
-    main(text, "a.out", resolution)
+    main(text, "examples/capital_M.gcode", resolution)
