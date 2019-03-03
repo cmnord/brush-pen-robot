@@ -4,6 +4,8 @@
 
 ![image 2](images/image2.jpg)
 
+![image 3](images/image3.jpg)
+
 Made for [MakeMIT 2019][make].
 
 ## Development
