@@ -5,13 +5,16 @@ import numpy as np
 import pdb
 
 
-def plot_ttf():
-    with open("a.xml") as f:
+def plot_ttf(letter):
+    with open("cambam5.ttx") as f:
         soup = BeautifulSoup(f, "xml")
 
     ax = plt.axes()
 
-    for contour in soup.find_all("contour"):
+    soup = soup.find("glyf")
+    glyph = soup.find("TTGlyph", attrs={"name": letter})
+
+    for contour in glyph.find_all("contour"):
         pts = contour.find_all("pt")
         x = np.array([int(pt["x"]) for pt in pts], dtype=np.double)
         y = np.array([int(pt["y"]) for pt in pts], dtype=np.double)
@@ -27,4 +30,4 @@ def plot_ttf():
 
 
 if __name__ == "__main__":
-    plot_ttf()
+    plot_ttf("A")
