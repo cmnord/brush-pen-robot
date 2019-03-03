@@ -40,6 +40,8 @@ class Glyph:
     def get_gcode(self, base_x: int, base_y: int, resolution: int) -> str:
         """ Return a string of GCode to print this glyph starting from the relative base x and y indices."""
         path = self.interpolate_path(resolution)
+        if len(path) == 0:
+            return ""
         plotted = set()
         out = ""
         for x, y in path.T:
