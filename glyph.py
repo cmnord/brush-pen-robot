@@ -40,21 +40,17 @@ class Glyph:
             out += "G1 X{} Y{} Z{};\n".format(x_relative, y_relative, self.width)
         return out
 
-    def plot(self):
-        """ Plot this glyph on its own graph."""
-        ax = plt.axes()
-
+    def get_curves(self) -> List[bezier.Curve]:
+        """ Get all the Bezier curves in each contour."""
+        curves = []
         for x, y, on in self.contours:
             assert len(x) == len(y) == len(on)
             curve_start = 0
             curve_end = 1
-            print(on)
-            plt.scatter(x, y)
             while curve_end < len(on):
                 while curve_end < len(on) and not on[curve_end]:
                     curve_end += 1
                 curve_end = min(len(on) - 1, curve_end + 1)
-                print(curve_start, curve_end)
                 degree = curve_end - curve_start - 1
                 curve = bezier.Curve(
                     np.asfortranarray(
@@ -62,9 +58,18 @@ class Glyph:
                     ),
                     degree=degree,
                 )
-                curve.plot(num_pts=256, ax=ax)
+                curves.append(curve)
                 curve_start = curve_end - 1
                 curve_end += 1
+        return curves
+
+    def plot(self):
+        """ Plot this glyph on its own graph."""
+        ax = plt.axes()
+
+        curves = self.get_curves()
+        for curve in curves:
+            curve.plot(num_pts=256, ax=ax)
 
         # Include height/width dot
         plt.scatter([self.width], [self.height])
