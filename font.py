@@ -4,6 +4,25 @@ from glyph import Glyph
 
 
 class Font:
+    GLYPH_MAPPING = {
+        " ": "space",
+        ",": "comma",
+        ".": "period",
+        "+": "plus",
+        "?": "question",
+        "!": "exclam",
+        "0": "zero",
+        "1": "one",
+        "2": "two",
+        "3": "three",
+        "4": "four",
+        "5": "five",
+        "6": "six",
+        "7": "seven",
+        "8": "eight",
+        "9": "nine",
+    }
+
     def __init__(self, filename: str):
         self.filename = filename
         with open(self.filename) as f:
@@ -21,7 +40,12 @@ class Font:
             self.glyphs[name] = Glyph(ttglyph, name, width, height)
 
     def get_glyph(self, name: str) -> Glyph:
-        return self.glyphs.get(name)
+        if name not in self.glyphs:
+            if name not in self.GLYPH_MAPPING:
+                print("Unsupported char: {}".format(name))
+                name = ".notdef"
+            name = self.GLYPH_MAPPING[name]
+        return self.glyphs[name]
 
     def plot(self):
         for glyph in self.glyphs:

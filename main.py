@@ -12,9 +12,6 @@ def main(text: str, out_filename: str, resolution: int):
         f.write("G1 Z{}".format(Glyph.Z_HIGH))
         # TODO: wrap text
         for char in text:
-            if char not in font.glyphs:
-                print("skipping unsupported char '{}'".format(char))
-                continue
             f.write("G1 Z{}".format(Glyph.Z_LOW))
             glyph = font.get_glyph(char)
             gcode = glyph.get_gcode(base_x, base_y, resolution)
@@ -25,6 +22,6 @@ def main(text: str, out_filename: str, resolution: int):
 
 
 if __name__ == "__main__":
-    text = "MakeMIT"
+    text = "Hello, MakeMIT!"
     resolution = 10
     main(text, "examples/makemit.gcode", resolution)
