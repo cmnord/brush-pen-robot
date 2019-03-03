@@ -29,8 +29,10 @@ class Glyph:
         all_points = np.ndarray((2, 0))
         curves = self.get_curves()
         for curve in curves:
+            if curve.nodes[0][0]:
+                pass
             # TODO: base num on curve.length()?
-            x = np.linspace(0, 1, num=resolution)
+            x = np.linspace(0, 1, num=resolution + 1)[:-1]
             points = curve.evaluate_multi(x)
             all_points = np.concatenate((all_points, points), 1)
         return all_points
@@ -38,30 +40,41 @@ class Glyph:
     def get_gcode(self, base_x: int, base_y: int, resolution: int) -> str:
         """ Return a string of GCode to print this glyph starting from the relative base x and y indices."""
         path = self.interpolate_path(resolution)
+        plotted = set()
         out = ""
         for x, y in path.T:
+            if (x, y) in plotted:
+                continue
             x_relative = int(base_x + x)
             y_relative = int(base_y + y)
             out += "G1 X{} Y{} F100\n".format(
                 x_relative * self.SCALE, y_relative * self.SCALE
             )
+            plotted.add((x, y))
         return out
 
     def get_curves(self) -> List[bezier.Curve]:
         """ Get all the Bezier curves in each contour."""
         curves = []
-        for x, y, on in self.contours:
-            assert len(x) == len(y) == len(on)
+        if len(self.contours) == 0:
+            return curves
+        for contour in self.contours:
+            num_pts = np.shape(contour)[1]
+            half = num_pts // 2 + 1
+            num_pts = half
             curve_start = 0
             curve_end = 1
-            while curve_end < len(on):
-                while curve_end < len(on) and not on[curve_end]:
+            while curve_end < num_pts:
+                while curve_end < num_pts and not contour[2][curve_end]:
                     curve_end += 1
-                curve_end = min(len(on) - 1, curve_end + 1)
+                curve_end = min(num_pts - 1, curve_end + 1)
                 degree = curve_end - curve_start - 1
                 curve = bezier.Curve(
                     np.asfortranarray(
-                        [x[curve_start:curve_end], y[curve_start:curve_end]]
+                        [
+                            contour[0][curve_start:curve_end],
+                            contour[1][curve_start:curve_end],
+                        ]
                     ),
                     degree=degree,
                 )
@@ -72,7 +85,16 @@ class Glyph:
 
     def plot_interpolated(self, resolution: int = 10):
         path = self.interpolate_path(resolution)
-        plt.plot(path[0], path[1])
+        xs = []
+        ys = []
+        plotted = set()
+        for x, y in path.T:
+            if (x, y) in plotted:
+                continue
+            xs.append(x)
+            ys.append(y)
+            plotted.add((x, y))
+        plt.scatter(path[0], path[1], alpha=0.3)
         plt.show()
 
     def plot(self):
