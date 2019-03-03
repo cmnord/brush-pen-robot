@@ -1,4 +1,8 @@
-# Brush pen lettering robot
+# Calligraphy Machine ✍️
+
+![img1](images/image1.jpg)
+
+![img2](images/image2.jpg)
 
 ## Development
 1. create virtualenv
