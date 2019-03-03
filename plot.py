@@ -1,7 +1,7 @@
-from font import Font
-
+from glyph import Glyph
 
 if __name__ == "__main__":
-    font = Font("fonts/cambam5.ttx")
-    letter = font.get_glyph("N")
+    letter = "A"
+    font = "fonts/cambam5.ttx"
+    letter = Glyph.from_font(font, letter)
     letter.plot()
