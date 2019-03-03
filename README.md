@@ -5,7 +5,8 @@
 2. source virtualenv
 3. `pip install -r requirements.txt`
 4. use `ttx` command to convert any ttf font to ttx format
-5. `python plot.py` to plot the letter A
+5. MacOS: fix matplotlib backend [bugfix][bug]
+6. `python plot.py` to plot the letter A
 
 ## Helpful links
 - [TrueType font encoding][ttf]
@@ -14,6 +15,7 @@
 - [Quadratic bezier][bez]
 - [How OpenType works][otf]
 
+[bug]: https://markhneedham.com/blog/2018/05/04/python-runtime-error-osx-matplotlib-not-installed-as-framework-mac/
 [ttf]: https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=iws-chapter08
 [fonttools]: https://pypi.org/project/fonttools/
 [cambam]: http://www.mrrace.com/CamBam_Fonts/
