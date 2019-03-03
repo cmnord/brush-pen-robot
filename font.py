@@ -27,3 +27,6 @@ class Font:
         for glyph in self.glyphs:
             self.glyphs[glyph].plot()
 
+    def plot_interpolated(self, resolution: int):
+        for glyph in self.glyphs:
+            self.glyphs[glyph].plot_interpolated(resolution)
