@@ -1,21 +1,19 @@
-# font = {
-#     'A': {'path': [(0, 0, 0), ], 'width': 20, 'height': 50},
-#     ...
-# }
+from font import Font
 
-def main(text, out_file):
-    with open(out_file) as f:
+
+def main(text: str, font_filename: str, out_filename: str):
+    font = Font(font_filename)
+    with open(out_filename, "w") as f:
         base_x = 0
         base_y = 0
-        for c in text:
-            path = font[c]['path']
-            width = font[c]['width']
-            height = font[c]['height']
+        # TODO: wrap text
+        for char in text:
+            glyph = font.get_glyph(char)
+            gcode = glyph.get_gcode(base_x, base_y)
+            f.write(gcode)
+            base_x += glyph.width
+            # base_y += glyph.height
 
-            for x, y, thickness in path:
-                f.write("G1 X%f Y%f Z%f;\n" % base_x + x, base_y + y, thickness)
-
-            base_x += width
 
 if __name__ == "__main__":
-    main()
+    main("Hello MakeMIT!", "fonts/cambam5.ttx", "a.out")
