@@ -1,5 +1,5 @@
 import bezier
-from bs4 import element
+from bs4 import BeautifulSoup, element
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -21,7 +21,7 @@ class Glyph:
         """ Interpolate points to the given resolution for each contour in this glyph."""
         return self.contours
 
-    def get_gcode(self, base_x: int, base_y: int, resolution: int):
+    def get_gcode(self, base_x: int, base_y: int, resolution: int) -> str:
         """ Return a string of GCode to print this glyph starting from the relative base x and y indices."""
         path = self.interpolate_path(resolution)
         out = ""
@@ -45,4 +45,14 @@ class Glyph:
         plt.scatter([self.width], [self.height])
         plt.axis("equal")
         plt.show()
+
+    @staticmethod
+    def from_font(font_filename: str, name: str) -> "Glyph":
+        with open(font_filename) as f:
+            soup = BeautifulSoup(f, "xml")
+        attrs = {"name": name}
+        glyph_soup = soup.find("glyf").find("TTGlyph", attrs=attrs)
+        width = int(soup.find("hmtx").find("mtx", attrs=attrs)["width"])
+        height = int(soup.find("OS_2").find("sCapHeight")["value"])
+        return Glyph(glyph_soup, name, width, height)
 
