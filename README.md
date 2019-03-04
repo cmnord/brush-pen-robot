@@ -14,7 +14,10 @@ Made for [MakeMIT 2019][make].
 3. `pip install -r requirements.txt`
 4. use `ttx` command to convert any ttf font to ttx format
 5. MacOS: fix matplotlib backend [bugfix][bug]
-6. `python plot.py` to plot the letter A
+
+## Usage
+- Generate GCode: see `python main.py -h` for options.
+- Plot glyphs for testing: see `python plot.py -h` for options.
 
 ## Helpful links
 - [TrueType font encoding][ttf]
