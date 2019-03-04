@@ -87,6 +87,7 @@ class Glyph:
             xs.append(x)
             ys.append(y)
         plt.scatter(path[0], path[1], alpha=0.3)
+        plt.axis("equal")
         plt.show()
 
     def plot(self):
