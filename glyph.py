@@ -29,8 +29,6 @@ class Glyph:
         all_points = np.ndarray((2, 0))
         curves = self.get_curves()
         for curve in curves:
-            if curve.nodes[0][0]:
-                pass
             # TODO: base num on curve.length()?
             x = np.linspace(0, 1, num=resolution + 1)[:-1]
             points = curve.evaluate_multi(x)
@@ -42,17 +40,13 @@ class Glyph:
         path = self.interpolate_path(resolution)
         if len(path) == 0:
             return ""
-        plotted = set()
         out = ""
         for x, y in reversed(path.T):
-            if (x, y) in plotted:
-                continue
             x_relative = int(base_x + x)
             y_relative = int(base_y + y)
             out += "G1 X{} Y{} F100\n".format(
                 x_relative * self.SCALE, y_relative * self.SCALE
             )
-            plotted.add((x, y))
         return out
 
     def get_curves(self) -> List[bezier.Curve]:
@@ -89,13 +83,9 @@ class Glyph:
         path = self.interpolate_path(resolution)
         xs = []
         ys = []
-        plotted = set()
         for x, y in path.T:
-            if (x, y) in plotted:
-                continue
             xs.append(x)
             ys.append(y)
-            plotted.add((x, y))
         plt.scatter(path[0], path[1], alpha=0.3)
         plt.show()
 
