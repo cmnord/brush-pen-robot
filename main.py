@@ -1,5 +1,6 @@
 from font import Font
 from glyph import Glyph
+import argparse
 
 FONT = "fonts/cambam5.ttx"
 
@@ -18,10 +19,24 @@ def main(text: str, out_filename: str, resolution: int):
             f.write(gcode)
             f.write("G1 Z{}".format(Glyph.Z_HIGH))
             base_x += glyph.width * 0.8
-            # base_y += glyph.height
 
 
 if __name__ == "__main__":
-    text = "Hello, MakeMIT!"
-    resolution = 10
-    main(text, "examples/makemit.gcode", resolution)
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "text", type=str, help="The string you want to generate GCode for."
+    )
+    parser.add_argument(
+        "--resolution",
+        type=int,
+        help="The number of points per Bezier curve to generate.",
+        default=10,
+    )
+    parser.add_argument(
+        "--out",
+        type=str,
+        help="The output file to write the GCode to.",
+        default="examples/out.gcode",
+    )
+    args = parser.parse_args()
+    main(args.text, args.out, args.resolution)
