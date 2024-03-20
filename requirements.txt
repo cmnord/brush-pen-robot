@@ -1,4 +1,4 @@
-black==18.9b0
+black==24.3.0
 fonttools==3.38.0
 pylint==2.3.1
 beautifulsoup4==4.7.1
